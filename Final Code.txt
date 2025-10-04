@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Renewable Energy — Wind · Solar · Hydro</title>
+  <meta name="description" content="Educational website about renewable energy sources — wind, solar, and hydroelectric power, with an interactive solar calculator." />
+  <style>
+    :root {
+      --bg: #f9fbff;
+      --card: #ffffff;
+      --muted: #4b5563;
+      --accent: #1e40af;
+      --accent2: #3b82f6;
+      --glass: rgba(30,64,175,0.05);
+      --radius: 14px;
+      --maxw: 1100px;
+      font-family: Inter, system-ui, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #ffffff 0%, #e0e7ff 60%);
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 30px 15px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--maxw);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card);
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      margin-bottom: 25px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 16px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--accent);
+    }
+
+    main { margin-top: 20px; }
+
+    section { display: none; }
+    section.active { display: block; animation: fadeIn 0.4s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hero {
+      background: linear-gradient(90deg, rgba(30,64,175,0.05), rgba(59,130,246,0.03));
+      border-radius: var(--radius);
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 { font-size: 2rem; margin-bottom: 10px; }
+    p.lead { color: var(--muted); margin-bottom: 20px; }
+
+    .cta {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: white;
+      padding: 10px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .badge {
+      background: rgba(30,64,175,0.08);
+      color: var(--accent);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .muted { color: var(--muted); }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .feature {
+      background: linear-gradient(135deg, rgba(30,64,175,0.05), rgba(59,130,246,0.03));
+      padding: 20px;
+      border-radius: var(--radius);
+      margin-top: 20px;
+    }
+
+    form { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+    input, textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(30,64,175,0.3);
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover { background: var(--accent2); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">RE</div>
+        <div>
+          <div style="font-weight:700;">Renewable Energy</div>
+          <div class="muted" style="font-size:13px;">Wind · Solar · Hydro</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#" class="nav-link active" data-target="home">Home</a>
+        <a href="#" class="nav-link" data-target="wind">Wind</a>
+        <a href="#" class="nav-link" data-target="solar">Solar</a>
+        <a href="#" class="nav-link" data-target="hydro">Hydro</a>
+        <a href="#" class="nav-link" data-target="learn">Learn</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HOME -->
+      <section id="home" class="active">
+        <div class="hero">
+          <h1>Clean Power from Nature</h1>
+          <p class="lead">Explore how wind, solar, and hydro energy work together to create a sustainable future.</p>
+          <a href="#" class="cta" data-target="learn">Start Learning</a>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="badge">Wind</div>
+            <h3>Wind Energy</h3>
+            <p class="muted">Turbines capture kinetic energy from air movement and convert it to electricity.</p>
+          </div>
+          <div class="card">
+            <div class="badge">Solar</div>
+            <h3>Solar Energy</h3>
+            <p class="muted">Photovoltaic cells convert sunlight into usable electric power efficiently.</p>
+          </div>
+          <div class="card">
+            <div class="badge">Hydro</div>
+            <h3>Hydroelectric Energy</h3>
+            <p class="muted">Water flow from rivers or dams turns turbines to generate power.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- WIND -->
+      <section id="wind">
+        <div class="feature">
+          <h2>Wind Energy</h2>
+          <p class="muted">Wind turbines convert the kinetic energy of moving air into electricity through rotating blades attached to a generator.</p>
+          <h4>⚙️Main Components of a Wind Turbine</h4>
+          <li>Blades – Capture the wind’s energy and rotate.</li>
+          <li>Rotor – Connected to the blades; helps turn the shaft.</li>
+          <li>Nacelle – The casing on top of the tower that holds the gearbox, generator, and control system.</li>
+          <li>Gearbox – Increases the rotation speed for the generator.</li>
+          <li>Generator – Converts mechanical energy into electrical energy.</li>
+          <li>Tower – Supports the structure; taller towers capture stronger winds.</li>
+          <h4>💨How It Works</h4>
+          <li>The wind blows and moves the blades.</li>
+          <li>The gearbox increases the speed of rotation.</li>
+          <li>The generator converts this motion into electricity.</li>
+          <li>The electricity is sent to the power grid through cables.</li>
+          <h4>⚡Uses of Wind Energy</h4>
+          <li>Generating electricity for homes, farms, and industries.</li>
+          <li>Supplying renewable power to national grids.</li>
+          <li>Used in remote or offshore locations where other power sources are unavailable.</li>
+          <h4>Advantages:</h4>
+            <li>Zero fuel cost</li>
+            <li>Environment-friendly and renewable</li>
+            <li>Scalable from small to large farms</li>
+            <li>Energy Independence</li>
+            <h4>About:</h4>
+            <ul class="muted">
+            <li>A wind turbine is a device that converts the kinetic energy of the wind into electrical energy. It works on a simple principle — when the wind blows, it moves the turbine blades, which are connected to a rotor. The rotor spins a shaft connected to a generator that produces electricity. Wind turbines are usually mounted on tall towers to capture stronger and more consistent winds. They are made up of several main parts, including the blades, rotor, nacelle, gearbox, generator, and tower. Wind energy is a clean and renewable source of power, as it does not produce harmful emissions or pollution. It helps reduce dependence on fossil fuels and contributes to sustainable energy development. Wind turbines can be installed both on land and offshore, and they are becoming an increasingly important part of modern power generation systems.</li>
+
+          <div style="text-align: center;">
+  <img src="https://t4.ftcdn.net/jpg/15/11/85/07/240_F_1511850735_d4j01TR56GIXn6OQiFV1Mx0PWBLnGS2U.jpg" alt="Wind Turbine" width="400">
+</div>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SOLAR -->
+      <section id="solar">
+        <div class="feature">
+          <h2>Solar Energy</h2>
+          <p class="muted">Solar panels use photovoltaic (PV) cells to convert sunlight into electricity. Ideal for homes, offices, and large-scale power plants.</p>
+
+          <h4>⚙️Main Components</h4>
+          <li>Solar Cells (PV Cells): Convert sunlight into electric energy.</li>
+          <li>Glass Layer: Protects the cells from dust, wind, and rain.</li>
+          <li>Frame: Usually made of aluminum; gives strength and structure.</li>
+          <li>Backsheet: Provides insulation and protects from environmental damage.</li>
+          <h4>🔧How It Works</h4>
+          <li>Solar panels use the photovoltaic (PV) effect to convert sunlight into electricity.</li>
+          <li>When sunlight hits the solar cells, it excites electrons in the semiconductor material (usually silicon).</li>
+          <li>These moving electrons create an electric current.</li>
+          <li>The generated DC (direct current) electricity is converted into AC (alternating current) using an inverter, which can then power homes and devices.</li>
+
+          <h4>⚡Uses of Solar Panels</h4>
+          <li>Generating electricity for homes, schools, and offices.</li>
+          <li>Powering street lights, traffic signals, and water pumps.</li>
+          <li>Used in satellites, calculators, and solar-powered gadgets.</li>
+          <li>Charging batteries for later use in off-grid systems.</li>
+
+
+
+          <h4>Quick Solar Power Calculator</h4>
+          <p class="muted">Estimate how much electricity can be generated from your solar panel area.</p>
+          <input id="area" type="number" placeholder="Enter area in m²" />
+          <button id="calc">Calculate Power</button>
+          <div id="result" class="muted" style="margin-top:8px;"></div>
+
+          <h4>Advantages:</h4>
+            <li>Renewable and low-maintenance</li>
+            <li>Suitable for rooftop setups</li>
+            <li>Cost-effective over time</li>
+            <h4>About:</h4>
+            <ul class="muted">
+            <ul class="muted">
+            <li>Solar panels are commonly installed on rooftops, open fields, or solar farms to capture maximum sunlight. They require very little maintenance and can last for more than 20–25 years. Since they use sunlight, a renewable and clean energy source, solar panels help reduce pollution and dependence on fossil fuels. They are used for residential, commercial, and industrial electricity generation, as well as in streetlights, calculators, and satellites. With advancements in technology, solar panels are becoming more efficient, affordable, and widely adopted across the world.</li>
+          <div style="text-align: center;">
+          <img src="https://t3.ftcdn.net/jpg/05/08/07/42/240_F_508074221_kG81hWWibtESwHcIY0gBnW14l7YdLlBm.jpg" alt="Solar Panel" width="400">
+          </div>
+          </ul>
+        </div>
+      </section>
+
+      <!-- HYDRO -->
+      <section id="hydro">
+        <div class="feature">
+          <h2>Hydroelectric Energy</h2>
+          <p class="muted">Hydroelectric systems harness the energy of flowing or falling water to produce electricity. They can supply continuous and reliable energy.</p>
+          <h4>🔩Main Components</h4>
+          <li>Dam: Stores a large amount of water and creates potential energy.</li>
+          <li>Reservoir: Holds the water used for power generation.</li>
+          <li>Penstock: A large pipe that carries water from the dam to the turbines.</li>
+          <li>Turbine: Rotates when water flows over it, converting energy of water into mechanical energy.</li>
+          <li>Generator: Converts mechanical energy from the turbine into electrical energy.</li>
+          <li>Powerhouse: Contains the turbines, generators, and control systems.</li>
+          <li>Transformer: Increases the voltage of generated electricity for transmission.</li>
+          <li>Tailrace: Channel that returns used water to the river.</li>
+          <h4>⚙️How It Works</h4>
+          <li>Water stored in a dam or reservoir is released to flow through turbines.</li>
+          <li>The flowing water spins the turbine blades.</li>
+          <li>The turbine is connected to a generator that converts the mechanical energy into electrical energy.</li>
+          <li>The electricity is then sent through power lines to homes and industries.</li>
+          <li>After passing through the turbine, the water returns safely to the river.</li>
+
+          <h4>⚡Uses of Hydro Power</h4>
+          <li>Generating clean and renewable electricity for cities and industries.</li>
+          <li>Providing irrigation water and flood control benefits.</li>
+          <li>Used in pumped storage plants to balance power supply and demand.</li>
+          <li>Supporting rural electrification and remote area development.</li>
+
+          <h4>Advantages:</h4>
+            <li>Stable power generation</li>
+            <li>Supports grid storage and irrigation</li>
+            <li>Low operational costs</li>
+            <h4>About</h4>
+            <ul class="muted">
+            <li>A hydro power plant is a facility that generates electricity from the energy of moving water. It works by storing water in a dam or reservoir and releasing it through large pipes called penstocks toward turbines. The force of the flowing water spins the turbine blades, which are connected to a generator. This generator converts the mechanical energy of the spinning turbine into electrical energy. The electricity is then transmitted through power lines for domestic, industrial, and commercial use.Hydro power is one of the oldest and most reliable sources of renewable energy. It does not produce air pollution or greenhouse gases, making it environmentally friendly. Besides generating power, hydro plants also help in irrigation, flood control, and water supply</li>
+          <div style="text-align: center;">
+          <img src="https://t4.ftcdn.net/jpg/03/64/93/43/240_F_364934390_DHdzzMKRCSMQRvxEANvsM6qLNNzd4H98.jpg" alt="Hydro Electric Power Plant " width="400">
+          </div>
+          </ul>
+        </div>
+      </section>
+
+      <!-- LEARN -->
+      <section id="learn">
+        <div class="feature">
+          <h2>Learn More / Resources</h2>
+          <ul class="muted">
+            <li><a href="https://www.irena.org/" target="_blank">International Renewable Energy Agency (IRENA)</a></li>
+            <li><a href="https://energy.gov/" target="_blank">U.S. Department of Energy</a></li>
+            <li><a href="https://www.un.org/en/climatechange" target="_blank">UN Climate Change Initiatives</a></li>
+          </ul>
+
+          <h3 style="margin-top:20px;">Feedback Form</h3>
+          <form onsubmit="event.preventDefault(); alert('Thanks for your feedback!');">
+            <input placeholder="Your Name" required />
+            <input type="email" placeholder="Email" required />
+            <textarea placeholder="Your Message" rows="4" required></textarea>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2025 Renewable Energy Project — Designed for Learning</footer>
+  </div>
+
+  <script>
+    // Navigation between sections
+    const navLinks = document.querySelectorAll('.nav-link, .cta');
+    const sections = document.querySelectorAll('section');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = link.getAttribute('data-target');
+
+        // Highlight current link
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const navMatch = document.querySelector('.nav-link[data-target="' + target + '"]');
+        if (navMatch) navMatch.classList.add('active');
+
+        // Show corresponding section
+        sections.forEach(sec => sec.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // Solar calculator
+    document.getElementById('calc').addEventListener('click', () => {
+      const area = parseFloat(document.getElementById('area').value || 0);
+      if (area <= 0) {
+        document.getElementById('result').textContent = "Please enter a valid area.";
+        return;
+      }
+      const kW = area * 0.15 * 0.8; // 150W/m² @ 80% efficiency
+      document.getElementById('result').textContent =
+        `Estimated power generation: ${kW.toFixed(2)} kW (ideal sunlight conditions).`;
+    });
+  </script>
+</body>
+</html>
